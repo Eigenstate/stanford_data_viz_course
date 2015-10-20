@@ -22,7 +22,7 @@ var parent = new THREE.Object3D();
 
 // load ascii model
 var jsonLoader = new THREE.JSONLoader();
-jsonLoader.load( "5HT2B.js", createScene );
+jsonLoader.load( "5ht2b/5HT2B.json", createScene );
 function createScene( geometry, materials ) {
     var mesh = new THREE.Mesh( geometry, new THREE.MeshFaceMaterial( materials ) );
     parent.add(mesh);
