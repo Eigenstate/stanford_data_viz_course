@@ -13,7 +13,7 @@
 		<![endif]-->
 		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
 		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-		<link href="app/assets/css/style.css" rel="stylesheet">
+		<link href="assets/css/style.css" rel="stylesheet">
 </head>
 	
 	
@@ -77,14 +77,29 @@
 					</div>
 					<!-- end viz 1 -->
 
+
 				</div>
 				<!-- end row -->
+<!--
+                <div class="row">
+                    <canvas id="processing"></canvas>
+                </div>
+                <div class="row">
+                    <canvas id="boids"></canvas>
+                </div>
+
+-->
+                <!-- second project -->
+                <div class="row">
+                    <canvas id="5ht2b"></canvas>
+                </div>
 
 			</div> 
 			<!-- end content -->
 
 		</div>
 		<!-- end container -->
+
 
 	</div>
 	<!-- end wrap -->	
@@ -102,7 +117,29 @@
 	<script src='https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js'></script>
 	<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js'></script>
 	<script src='https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.15/require.min.js'></script>	
-	<script src='assets/js/noisy_lines.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/processing.js/1.4.8/processing.min.js'></script>
+	<script src='assets/js/particle.js'></script>
+
+    <!-- 5ht2b -->
+    <!-- Renderer -->
+    <script src="boids/assets/js/math/Vector3.js"></script> <!-- this has to be first wtf -->
+    <script src="boids/assets/js/renderers/three.min.js"></script>
+    <script src="boids/assets/js/renderers/Projector.js"></script>
+    <script src="boids/assets/js/renderers/CanvasRenderer.js"></script>
+    <script src="boids/assets/js/controls/OrbitControls.js"></script>
+
+    <!-- Other Libs -->
+    <script src="boids/assets/js/controls/dat.gui.min.js"></script>
+    <script src="boids/assets/js/libs/stats.min.js"></script>
+
+    <!-- Physics - Particle -->
+    <script src="boids/assets/js/physics/physics_boid.js"></script>
+    <script src="boids/assets/js/obj/Bird.js"></script>
+
+    <!-- Render - Boids -->
+    <script src="boids/assets/js/renderers/render_three_boid.js"></script>
+		
+    <script src='5ht2b/display_protein.js'></script>
 
 </body>
 </html>
