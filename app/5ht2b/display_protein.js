@@ -22,23 +22,76 @@ var parent = new THREE.Object3D();
 
 // load ascii model
 
-var loader = new THREE.STLLoader();
-loader.load( '5ht2b/5ht2b.stl', function ( geometry ) {
-    var material = new THREE.MeshPhongMaterial( { color: 0xff5533, specular: 0x111111, shininess: 200 } );
-    var mesh = new THREE.Mesh( geometry, material );
-    mesh.position.set( 0, - 0.25, 0.6 );
-    mesh.rotation.set( 0, - Math.PI / 2, 0 );
-    mesh.scale.set( 0.5, 0.5, 0.5 );
-    mesh.castShadow = true;
-    mesh.receiveShadow = true;
-    parent.add( mesh );
-} );
+var loader = new THREE.PDBLoader()
+loader.load('5ht2b/4nc3.pdb', function ( geometry, geometryBonds, json ) {
+
+    var boxGeometry = new THREE.BoxGeometry( 1, 1, 1 );
+    var sphereGeometry = new THREE.IcosahedronGeometry( 1, 2 );
+
+    var offset = geometry.center();
+    geometryBonds.translate( offset.x, offset.y, offset.z );
+
+//    for ( var i = 0; i < geometry.vertices.length; i ++ ) {
+//
+//        var position = geometry.vertices[ i ];
+//        var color = geometry.colors[ i ];
+//        var element = geometry.elements[ i ];
+//
+//        var material = new THREE.MeshPhongMaterial( { color: color } );
+//
+//        var object = new THREE.Mesh( sphereGeometry, material );
+//        object.position.copy( position );
+//        object.position.multiplyScalar( 75 );
+//        object.scale.multiplyScalar( 25 );
+//        parent.add( object );
+//
+//        var atom = json.atoms[ i ];
+//
+////      var text = document.createElement( 'div' );
+////      text.className = 'label';
+////      text.style.color = 'rgb(' + atom[ 3 ][ 0 ] + ',' + atom[ 3 ][ 1 ] + ',' + atom[ 3 ][ 2 ] + ')';
+////      text.textContent = atom[ 4 ];
+//
+//        //var label = new THREE.CSS2DObject( text );
+//        //label.position.copy( object.position );
+//        //root.add( label );
+//
+//    }
+
+    for ( var i = 0; i < geometryBonds.vertices.length; i += 2 ) {
+
+        var start = geometryBonds.vertices[ i ];
+        var end = geometryBonds.vertices[ i + 1 ];
+
+        start.multiplyScalar( 75 );
+        end.multiplyScalar( 75 );
+
+        var object = new THREE.Mesh( boxGeometry, new THREE.MeshPhongMaterial( 0xffffff ) );
+        object.position.copy( start );
+        object.position.lerp( end, 0.5 );
+        object.scale.set( 5, 5, start.distanceTo( end ) );
+        object.lookAt( end );
+        parent.add( object );
+    }
+    render();
+}, function ( xhr ) {
+
+                    if ( xhr.lengthComputable ) {
+
+                        var percentComplete = xhr.loaded / xhr.total * 100;
+                        console.log( Math.round( percentComplete, 2 ) + '% downloaded' );
+
+                    }
+
+                }, function ( xhr ) {
+
+                } );
 
 scene.add(parent);
 
 function render() {
-  renderer.render( scene, camera );
-  requestAnimationFrame(render);
+renderer.render( scene, camera );
+requestAnimationFrame(render);
 }
 
 // ------------------------------------------------------------------------------------------------
